@@ -5,11 +5,11 @@ function Note({ note, onDelete , onEdit }) {
 
     return (
         <>
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-900">{note.title}</h5>
-            <p className="mb-3 font-normal text-gray-900 dark:text-gray-900 text-wrap">{note.content}</p>
-            <p className="mb-3 font-normal text-gray-900 dark:text-gray-900">{formattedDate}</p>
+            <h5 className="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-900">{note.title}</h5>
+            <p className="mb-4 font-normal text-gray-900 dark:text-gray-900 overflow-scroll">{note.content}</p>
+            <p className="mb-4 font-normal text-gray-900 dark:text-gray-900 overflow-scroll">{formattedDate}</p>
 
-            <div className="flex justify-start ">
+            <div className="flex justify-start mt-5">
                 <button
                     className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 m-1"
                     onClick={() => onDelete(note.id)}

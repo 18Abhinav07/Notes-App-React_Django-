@@ -11,7 +11,7 @@ function ViewNotes() {
     const [notes, setNotes] = useState([]);
     const [alert, setAlert] = useState({ visible: false, message: '', type: '' });
     const [notetoedit, setNoteToEdit] = useState(null)
-    
+
 
     useEffect(() => {
         getNotes();
@@ -96,7 +96,7 @@ function ViewNotes() {
                 message: err.message,
                 type: 'error',
             }));
-        
+
 
         setNoteToEdit(null)
     };
@@ -136,10 +136,31 @@ function ViewNotes() {
         };
 
         return (
-            <div>
-                <textarea value={title} onChange={handleTitleChange} />
-                <textarea value={content} onChange={handleContentChange} />
-                <button onClick={handleSave}>Save</button>
+            <div className="h-[40vh] w-[50vw]  bg-white shadow sm:rounded-lg flex justify-center items-center">
+                <div className="w-[30vw] m-10">
+                    <div className='flex justify-center items-centre text-centre'>
+                        <h1 className="flex text-centre mb-4 text-3xl font-extrabold text-gray-600 md:text-4xl lg:text-4xl"><span className=" text-centre text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"> Edit Note</span></h1>
+                    </div>
+                    <span className="bg-gray-100 text-gray-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-400 dark:text-gray-800">Title</span>
+                    <textarea
+                        className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-1 mb-5"
+                        type="text"
+                        value={title} onChange={handleTitleChange}
+                    ></textarea>
+                    <span className="bg-gray-100 text-gray-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-400 dark:text-gray-800">Content</span>
+                    <textarea
+                        className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-1"
+                        type="text"
+                        value={content} onChange={handleContentChange}
+                    ></textarea>
+                    <button
+                        className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                        onClick={handleSave}>
+                        <span className="ml-3">
+                            Save
+                        </span>
+                    </button>
+                </div>
             </div>
         );
     };
@@ -147,9 +168,9 @@ function ViewNotes() {
 
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col items-centre justify-centre">
             {notes.length > 0 && <NotesCarousel notes={notes} onDelete={deleteNote} onEdit={editNote} />}
-            <div className='mt-20'>
+            <div className='mt-20 flex justify-center '>
                 {notetoedit && <NoteEditor />}
             </div>
 

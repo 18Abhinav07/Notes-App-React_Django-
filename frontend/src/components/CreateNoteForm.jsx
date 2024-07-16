@@ -38,10 +38,10 @@ function CreateNoteForm() {
                         type: 'success',
                     });
                     setLoading(false)
-                    const timer = setTimeout(() => {    
+                    const timer = setTimeout(() => {
                         navigate('/viewNotes')
                     }, 2000); // Close alert after 1 seconds
-                    
+
                 } else {
                     setAlert({
                         visible: true,
@@ -56,8 +56,8 @@ function CreateNoteForm() {
                 message: err.message,
                 type: 'error',
             }), setLoading(false));
-        
-        
+
+
     };
 
     const handleAlertClose = () => {
@@ -67,15 +67,14 @@ function CreateNoteForm() {
     return (
         // style the form element here..
         <>
-            <div className="min-h-screen bg-gray-100 text-gray-900 flex ">
+            <div className="min-h-screen bg-gray-100 text-gray-900 flex items-centre justify-center ">
                 <div className=" w-auto m-0 sm:m-10 bg-white shadow sm:rounded-lg ">
                     ggiwuwifohoiwfhoif hwncfuwic b fwwncE FCE
                 </div>
 
                 <div className=" w-auto m-0 sm:m-10 bg-white shadow sm:rounded-lg flex flex-col justify-center">
-                    <h3 className="text-primary-500 mb-4 text-4xl font-semibold text-blue-500 mt-5 text-center">
-                        Create a new note
-                    </h3>
+                    <div className="flex items-centre justify-center">
+                        <h1 className="flex text-centre mb-4 text-3xl font-extrabold text-gray-600 md:text-4xl lg:text-4xl">Create a.. <span className=" text-centre text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"> New Note</span> </h1> </div>
                     <div className="m-10 sm:m-10">
                         {/* place for the main logo etc */}
 
