@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Note from './Note';
 
-function NotesCarousel({ notes, onDelete }) {
+function NotesCarousel({ notes, onDelete, onEdit }) {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const goToSlide = (index) => {
@@ -19,31 +19,19 @@ function NotesCarousel({ notes, onDelete }) {
     };
 
     return (
-        <div id="default-carousel" className="relative w-full" data-carousel="slide">
-            <div className="relative h-96 overflow-hidden rounded-lg">
-                {notes.map((note, index) => (
+        <div id="default-carousel" className="relative w-[90vw] h-[30vh] border border-sky-700 bg-slate-300" data-carousel="slide">
+            <div className='relative'>
+                {notes.slice().reverse().map((note, index) => (
                     <div
                         key={note.id}
-                        className={`duration-700 ease-in-out absolute w-full ${index === currentSlide ? 'block' : 'hidden'} items-center justify-center `}
+                        className={`duration-700 ease-in-out absolute w-full ${index === currentSlide ? 'block' : 'hidden'} flex flex-col items-center justify-center `}
                         data-carousel-item
                     >
-                        <Note note={note} onDelete={onDelete} />
+                        <Note note={note} onDelete={onDelete} onEdit={onEdit} />
                     </div>
                 ))}
             </div>
-            <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                {notes.map((note, index) => (
-                    <button
-                        key={note.id}
-                        type="button"
-                        className={`w-3 h-3 rounded-full ${index === currentSlide ? 'bg-blue-600' : 'bg-gray-400'}`}
-                        aria-current={index === currentSlide ? 'true' : 'false'}
-                        aria-label={`Slide ${index + 1}`}
-                        data-carousel-slide-to={index}
-                        onClick={() => goToSlide(index)}
-                    ></button>
-                ))}
-            </div>
+
             <button
                 type="button"
                 className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
@@ -58,7 +46,7 @@ function NotesCarousel({ notes, onDelete }) {
                         fill="none"
                         viewBox="0 0 6 10"
                     >
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4"/>
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4" />
                     </svg>
                     <span className="sr-only">Previous</span>
                 </span>
@@ -77,11 +65,26 @@ function NotesCarousel({ notes, onDelete }) {
                         fill="none"
                         viewBox="0 0 6 10"
                     >
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
                     </svg>
                     <span className="sr-only">Next</span>
                 </span>
             </button>
+
+            <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                {notes.map((note, index) => (
+                    <button
+                        key={note.id}
+                        type="button"
+                        className={`w-2 h-2 rounded-full ${index === currentSlide ? 'bg-blue-600' : 'bg-gray-400'}`}
+                        aria-current={index === currentSlide ? 'true' : 'false'}
+                        aria-label={`Slide ${index + 1}`}
+                        data-carousel-slide-to={index}
+                        onClick={() => goToSlide(index)}
+                    ></button>
+                ))}
+            </div>
+
         </div>
     );
 }
