@@ -7,11 +7,13 @@ import NotFound from './pages/NotFound'
 import ViewNotes from './pages/ViewNotes'
 import CreateNotes from './pages/CreateNotes'
 import ProtectedRoute from './components/ProtectedRoute'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 
 
 function Logout() {
   localStorage.clear()
-  return <Navigate to="/login" />
+  return <Navigate to="/" />
 }
 
 
@@ -25,37 +27,43 @@ function RegisterAndLogout() {
 function App() {
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={
-          // this is done so that no one can access the home link without having authenticated first.
+    <>
+      <div className='flex flex-col'>
+        <BrowserRouter>
           <ProtectedRoute>
-            <Home />
+            <Navbar />
           </ProtectedRoute>
-        } />
 
-        <Route path="/login" element={<Login />} />
+          <Routes>
+            <Route path="/" element={
+              <Home />
+            } />
 
-        <Route path="/register" element={<RegisterAndLogout />} />
+            <Route path="/login" element={<Login />} />
 
-        <Route path="/viewNotes" element={
-          <ProtectedRoute>
-            <ViewNotes />
-          </ProtectedRoute>} />
+            <Route path="/register" element={<RegisterAndLogout />} />
 
-        <Route path="/createNotes" element={
-          <ProtectedRoute>
-            <CreateNotes />
-          </ProtectedRoute>} />
+            <Route path="/viewNotes" element={
+              <ProtectedRoute>
+                <ViewNotes />
+              </ProtectedRoute>} />
 
-        <Route path="/logout" element={
-          <ProtectedRoute>
-            <Logout />
-          </ProtectedRoute>} />
+            <Route path="/createNotes" element={
+              <ProtectedRoute>
+                <CreateNotes />
+              </ProtectedRoute>} />
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+            <Route path="/logout" element={
+              <ProtectedRoute>
+                <Logout />
+              </ProtectedRoute>} />
+
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </div>
+    </>
   )
 }
 

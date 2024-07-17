@@ -10,7 +10,9 @@ function ViewNotes() {
 
     const [notes, setNotes] = useState([]);
     const [alert, setAlert] = useState({ visible: false, message: '', type: '' });
-    const [notetoedit, setNoteToEdit] = useState(null)
+    const [notetoedit, setNoteToEdit] = useState(null);
+    const [visible, setVisible] = useState(true)
+    const [loading, setLoading] = useState(false)
 
 
     useEffect(() => {
@@ -99,10 +101,12 @@ function ViewNotes() {
 
 
         setNoteToEdit(null)
+        setVisible(true)
     };
 
 
     const editNote = (id) => {
+        setVisible(false)
         const notetoedit = notes.find(note => note.id === id);
         setNoteToEdit(notetoedit)
 
@@ -117,14 +121,6 @@ function ViewNotes() {
             setContent(notetoedit.content);
         }, [notetoedit]);
 
-        const handleTitleChange = (event) => {
-            setTitle(event.target.value);
-        };
-
-        const handleContentChange = (event) => {
-            setContent(event.target.value);
-        };
-
         const handleSave = () => {
 
             const updatedcontent = {
@@ -136,50 +132,87 @@ function ViewNotes() {
         };
 
         return (
-            <div className="h-[40vh] w-[50vw]  bg-white shadow sm:rounded-lg flex justify-center items-center">
-                <div className="w-[30vw] m-10">
-                    <div className='flex justify-center items-centre text-centre'>
-                        <h1 className="flex text-centre mb-4 text-3xl font-extrabold text-gray-600 md:text-4xl lg:text-4xl"><span className=" text-centre text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"> Edit Note</span></h1>
+            <div className="max-w-screen-xl m-0 sm:m-10 bg-gradient-to-r from-cyan-100 to-purple-200 hover:bg-gradient-to-l shadow sm:rounded-lg flex justify-center flex-1">
+                <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12 flex items-center justify-center">
+                    <div className="flex flex-col items-center md:w-full">
+                        {/* place for the main logo etc */}
+                        <h3 className="font-poppins text-primary-500 mb-4 text-4xl font-semibold text-blue-500">
+                            Edit Note
+                        </h3>
+                        <div className="w-full flex-1 mt-8">
+                            <div className="mx-auto max-w-s">
+                                <label for="title" className="flex font-poppins text-sm font-medium m-2">Title</label>
+                                <input
+                                    className=" font-poppins font-semibold w-full px-8 py-4 rounded-lg  bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                                    type="text"
+                                    id="title"
+                                    placeholder="Title"
+                                    value={title} onChange={(e) => setTitle(e.target.value)}
+                                />
+                                <label for="content" className="flex font-poppins text-sm font-medium m-2 ">Content</label>
+                                <textarea
+                                    className="font-poppins font-semibold w-full px-8 py-4 rounded-lg bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-1"
+                                    type="text"
+                                    id="content"
+                                    value={content} onChange={(e) => setContent(e.target.value)}
+                                ></textarea>
+                                {loading && <LoadingIndicator />}
+                                <div className="flex flex-row justify-end">
+                                <button
+                                    className="mt-5 mr-3  tracking-wide font-semibold bg-indigo-500 text-gray-100 w-[20%] py-2 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                                    type="submit"
+                                    onClick={handleSave}
+                                    style={{ display: loading ? 'none' : 'flex' }}
+                                >
+                                    <span className="ml-1 mr-1 pl-2 pr-2">
+                                        Save
+                                    </span>
+                                </button>
+                                <button
+                                    className="mt-5 p-2  tracking-wide font-semibold bg-red-500 text-gray-100 w-[25%] py-2 rounded-lg hover:bg-red-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                                    type="submit"
+                                    onClick={() => { setNoteToEdit(null), setLoading(false), setVisible(true) }}
+                                    style={{ display: loading ? 'none' : 'flex' }}
+                                >
+                                    <span className="ml-1 mr-1 pl-2 pr-2">
+                                        Cancel
+                                    </span>
+                                    </button>
+                                    </div>
+                                <p className="mt-6 text-sm text-gray-600 text-center">
+                                    Changes are meant to be the steps to laddder of growth.
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <span className="bg-gray-100 text-gray-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-400 dark:text-gray-800">Title</span>
-                    <textarea
-                        className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-1 mb-5"
-                        type="text"
-                        value={title} onChange={handleTitleChange}
-                    ></textarea>
-                    <span className="bg-gray-100 text-gray-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-400 dark:text-gray-800">Content</span>
-                    <textarea
-                        className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-1"
-                        type="text"
-                        value={content} onChange={handleContentChange}
-                    ></textarea>
-                    <button
-                        className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
-                        onClick={handleSave}>
-                        <span className="ml-3">
-                            Save
-                        </span>
-                    </button>
+                </div>
+                <div className="flex-1 bg-indigo-100 text-center hidden lg:flex">
+                    <div
+                        className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
+                        style={{
+                            backgroundImage: "url(../Working.jpg)"
+                        }}
+                    ></div>
                 </div>
             </div>
+
         );
     };
 
 
 
     return (
-        <div className="flex flex-col items-centre justify-centre">
-            {notes.length > 0 && <NotesCarousel notes={notes} onDelete={deleteNote} onEdit={editNote} />}
-            <div className='mt-20 flex justify-center '>
-                {notetoedit && <NoteEditor />}
-            </div>
-
+        <div id="view_notes" className="min-h-screen bg-gradient-to-r from-gray-100 to-gray-300 flex items-centre justify-center ">
+            {notes.length > 0 && visible && <NotesCarousel notes={notes} onDelete={deleteNote} onEdit={editNote} />}
+            {notetoedit && <NoteEditor />}
+            <div className='block'>
             <Alert
                 message={alert.message}
                 type={alert.type}
                 visible={alert.visible}
                 onClose={handleAlertClose}
-            />
+                />
+                </div>
         </div>
 
     )

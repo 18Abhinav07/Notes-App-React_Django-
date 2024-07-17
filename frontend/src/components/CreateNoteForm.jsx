@@ -67,14 +67,14 @@ function CreateNoteForm() {
     return (
         // style the form element here..
         <>
-            <div className="min-h-screen bg-gray-100 text-gray-900 flex items-centre justify-center ">
-                <div className=" w-auto m-0 sm:m-10 bg-white shadow sm:rounded-lg ">
-                    ggiwuwifohoiwfhoif hwncfuwic b fwwncE FCE
-                </div>
+            <div className="min-h-screen bg-gradient-to-r from-gray-400 to-gray-200 flex items-centre justify-center ">
 
-                <div className=" w-auto m-0 sm:m-10 bg-white shadow sm:rounded-lg flex flex-col justify-center">
+                <div className=" w-auto m-0 sm:m-10 bg-gradient-to-r from-gray-100 to-gray-300 hover:bg-gradient-to-l shadow sm:rounded-lg flex flex-col justify-center">
+
                     <div className="flex items-centre justify-center">
-                        <h1 className="flex text-centre mb-4 text-3xl font-extrabold text-gray-600 md:text-4xl lg:text-4xl">Create a.. <span className=" text-centre text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"> New Note</span> </h1> </div>
+                        <h1 className="flex text-centre mb-4 text-3xl font-extrabold text-gray-600 md:text-4xl lg:text-4xl font-poppins">Create a.. <span className=" text-centre text-transparent bg-clip-text bg-gradient-to-r to-sky-600 from-purple-400"> New Note</span> </h1>
+                    </div>
+
                     <div className="m-10 sm:m-10">
                         {/* place for the main logo etc */}
 
@@ -115,10 +115,6 @@ function CreateNoteForm() {
                                             Create Note
                                         </span>
                                     </button>
-
-                                    <p className="mt-6 text-sm text-gray-600 text-center">
-                                        To a minimalistic and simple Note Making.
-                                    </p>
                                     <Alert
                                         message={alert.message}
                                         type={alert.type}

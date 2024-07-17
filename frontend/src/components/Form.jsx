@@ -31,8 +31,6 @@ function Form({ route, method }) {
 
     const name = method === 'login' ? "Login" : "Register";
 
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -59,12 +57,12 @@ function Form({ route, method }) {
     return (
         // style the form element here..
         <>
-            <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
-                <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
-                    <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
-                        <div className="mt-12 flex flex-col items-center">
+            <div className="min-h-screen bg-gradient-to-r from-gray-800 to-gray-300 text-gray-900 flex justify-center">
+                <div className="max-w-screen-xl m-0 sm:m-10 bg-gradient-to-br from-cyan-100 to-purple-300 shadow sm:rounded-lg flex justify-center flex-1">
+                    <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12 flex items-center justify-center">
+                        <div className="flex flex-col items-center">
                             {/* place for the main logo etc */}
-                            <h3 className="text-primary-500 mb-4 text-4xl font-semibold text-blue-500">
+                            <h3 className="font-poppins text-primary-500 mb-4 text-4xl font-semibold text-blue-500">
                                 {name}
                             </h3>
                             <div className="w-full flex-1 mt-8">
