@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Note({ note, onDelete, onEdit }) {
+function Note({ note, onDelete, onEdit, mdParser }) {
     const formattedDate = new Date(note.created_at).toLocaleDateString('en-US');
     return (
         <>
@@ -18,9 +18,10 @@ function Note({ note, onDelete, onEdit }) {
                     <div className='flex justify-center items-center py-12'>
                         <img src='../Working.jpg' className='h-40 w-40' />
                     </div>
-                    <p className='font-poppins font-semibold  text-slate-800 overflow-scroll'>
-                        {note.content}
-                    </p>
+                    <div 
+                        className="prose"
+                        dangerouslySetInnerHTML={{ __html: mdParser.render(note.content) }}
+                    />
 
                     <p className="mb-4 font-normal text-gray-900 dark:text-gray-900 overflow-scroll"> <strong>Date: </strong>{formattedDate}</p>
 

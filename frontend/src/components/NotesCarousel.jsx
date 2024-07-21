@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Note from './Note';
 
-function NotesCarousel({ notes, onDelete, onEdit }) {
+function NotesCarousel({ notes, onDelete, onEdit , mdParser}) {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const goToSlide = (index) => {
@@ -26,7 +26,7 @@ function NotesCarousel({ notes, onDelete, onEdit }) {
                     className={` w-full ${index === currentSlide ? 'block' : 'hidden'} bg-gradient-to-r from-gray-200 to-sky-100 `}
                     data-carousel-item
                 >
-                    <Note note={note} onDelete={onDelete} onEdit={onEdit} />
+                    <Note note={note} onDelete={onDelete} onEdit={onEdit} mdParser={mdParser} />
                 </div>
             ))}
 

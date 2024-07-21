@@ -13,7 +13,7 @@ function Home() {
                         <div>
                             <h1 className="md:text-5xl text-4xl font-bold mb-6 md:!leading-[55px]">Simplistic and minimalistic note taking.
                             </h1>
-                            <p className="text-base leading-relaxed">Keeping it simple, taking a short note, a reminder, a second brain. All done in this simple note taker.</p>
+                            <p className="text-base leading-relaxed">Keeping it simple, taking a short note, a reminder, a second brain. All done in this simple note taker. A simple text or a full use of markdown use the editor with all the functionalities inbuilt.</p>
                             <div className="flex flex-wrap gap-y-4 gap-x-8 mt-8">
 
                                 <Link to={destination} >

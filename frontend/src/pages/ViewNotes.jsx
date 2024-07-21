@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import Alert from "../components/Alert";
 import api from '../api'
 import NotesCarousel from "../components/NotesCarousel";
-
-
+import MdEditor from 'react-markdown-editor-lite';
+import MarkdownIt from 'markdown-it';
+import 'react-markdown-editor-lite/lib/index.css';
 
 function ViewNotes() {
 
@@ -13,6 +14,11 @@ function ViewNotes() {
     const [notetoedit, setNoteToEdit] = useState(null);
     const [visible, setVisible] = useState(true)
     const [loading, setLoading] = useState(false)
+
+    const mdParser = new MarkdownIt({
+        breaks: true,
+        linkify: true,
+    });
 
 
     useEffect(() => {
@@ -121,98 +127,81 @@ function ViewNotes() {
             setContent(notetoedit.content);
         }, [notetoedit]);
 
-        const handleSave = () => {
+        const handleEditorChange = ({ text }) => {
+            setContent(text);
+        };
 
+        const handleSave = () => {
             const updatedcontent = {
                 "title": title,
                 "content": content,
             }
-
             sendEdit(notetoedit.id, updatedcontent);
         };
 
         return (
-            <div className="max-w-screen-xl m-0 sm:m-10 bg-gradient-to-r from-cyan-100 to-purple-200 hover:bg-gradient-to-l shadow sm:rounded-lg flex justify-center flex-1">
-                <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12 flex items-center justify-center">
-                    <div className="flex flex-col items-center md:w-full">
-                        {/* place for the main logo etc */}
-                        <h3 className="font-poppins text-primary-500 mb-4 text-4xl font-semibold text-blue-500">
-                            Edit Note
-                        </h3>
-                        <div className="w-full flex-1 mt-8">
-                            <div className="mx-auto max-w-s">
-                                <label for="title" className="flex font-poppins text-sm font-medium m-2">Title</label>
+            <div className="w-auto m-0 sm:m-10 bg-gradient-to-r from-gray-100 to-gray-300 hover:bg-gradient-to-l shadow sm:rounded-lg flex flex-col justify-center">
+                <div className="flex items-centre justify-center">
+                    <h1 className="flex text-centre mb-4 text-3xl font-extrabold text-gray-600 md:text-4xl lg:text-4xl font-poppins">Edit <span className="text-centre text-transparent bg-clip-text bg-gradient-to-r to-sky-600 from-purple-400"> Note</span></h1>
+                </div>
+
+                <div className="m-10 sm:m-10">
+                    <div className="w-full flex-1">
+                        <div className="m-5">
+                            <form onSubmit={(e) => { e.preventDefault(); handleSave(); }}>
                                 <input
-                                    className=" font-poppins font-semibold w-full px-8 py-4 rounded-lg  bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                                     type="text"
-                                    id="title"
                                     placeholder="Title"
-                                    value={title} onChange={(e) => setTitle(e.target.value)}
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
                                 />
-                                <label for="content" className="flex font-poppins text-sm font-medium m-2 ">Content</label>
-                                <textarea
-                                    className="font-poppins font-semibold w-full px-8 py-4 rounded-lg bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-1"
-                                    type="text"
-                                    id="content"
-                                    value={content} onChange={(e) => setContent(e.target.value)}
-                                ></textarea>
+                                <MdEditor
+                                    style={{ height: '500px', marginTop: '20px' }}
+                                    renderHTML={(text) => mdParser.render(text)}
+                                    onChange={handleEditorChange}
+                                    value={content}
+                                    view={{ menu: true, md: true, html: true }}
+                                    canView={{ menu: true, md: true, html: true, fullScreen: true, hideMenu: true }}
+                                />
                                 {loading && <LoadingIndicator />}
-                                <div className="flex flex-row justify-end">
-                                <button
-                                    className="mt-5 mr-3  tracking-wide font-semibold bg-indigo-500 text-gray-100 w-[20%] py-2 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
-                                    type="submit"
-                                    onClick={handleSave}
-                                    style={{ display: loading ? 'none' : 'flex' }}
-                                >
-                                    <span className="ml-1 mr-1 pl-2 pr-2">
-                                        Save
-                                    </span>
-                                </button>
-                                <button
-                                    className="mt-5 p-2  tracking-wide font-semibold bg-red-500 text-gray-100 w-[25%] py-2 rounded-lg hover:bg-red-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
-                                    type="submit"
-                                    onClick={() => { setNoteToEdit(null), setLoading(false), setVisible(true) }}
-                                    style={{ display: loading ? 'none' : 'flex' }}
-                                >
-                                    <span className="ml-1 mr-1 pl-2 pr-2">
-                                        Cancel
-                                    </span>
+                                <div className="flex justify-end mt-5">
+                                    <button
+                                        className="mr-3 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-[20%] py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                                        type="submit"
+                                        style={{ display: loading ? 'none' : 'flex' }}
+                                    >
+                                        <span className="ml-3">Save</span>
                                     </button>
-                                    </div>
-                                <p className="mt-6 text-sm text-gray-600 text-center">
-                                    Changes are meant to be the steps to laddder of growth.
-                                </p>
-                            </div>
+                                    <button
+                                        className="tracking-wide font-semibold bg-red-500 text-gray-100 w-[25%] py-4 rounded-lg hover:bg-red-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                                        type="button"
+                                        onClick={() => { setNoteToEdit(null); setLoading(false); setVisible(true); }}
+                                        style={{ display: loading ? 'none' : 'flex' }}
+                                    >
+                                        <span className="ml-3">Cancel</span>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <div className="flex-1 bg-indigo-100 text-center hidden lg:flex">
-                    <div
-                        className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
-                        style={{
-                            backgroundImage: "url(../Working.jpg)"
-                        }}
-                    ></div>
-                </div>
             </div>
-
         );
     };
 
-
-
     return (
         <div id="view_notes" className="min-h-screen bg-gradient-to-r from-gray-100 to-gray-300 flex items-centre justify-center ">
-            {notes.length > 0 && visible && <NotesCarousel notes={notes} onDelete={deleteNote} onEdit={editNote} />}
+            {notes.length > 0 && visible && <NotesCarousel notes={notes} onDelete={deleteNote} onEdit={editNote} mdParser={mdParser} />}
             {notetoedit && <NoteEditor />}
             <div className='block'>
-            <Alert
-                message={alert.message}
-                type={alert.type}
-                visible={alert.visible}
-                onClose={handleAlertClose}
+                <Alert
+                    message={alert.message}
+                    type={alert.type}
+                    visible={alert.visible}
+                    onClose={handleAlertClose}
                 />
-                </div>
+            </div>
         </div>
 
     )
