@@ -30,10 +30,8 @@ function App() {
     <>
       <div className='flex flex-col'>
         <BrowserRouter>
-          <ProtectedRoute>
-            <Navbar />
-          </ProtectedRoute>
 
+          <Navbar />
           <Routes>
             <Route path="/" element={
               <Home />
